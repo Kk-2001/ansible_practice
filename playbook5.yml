@@ -1,0 +1,10 @@
+---
+- name: install tree software on all machines
+  hosts: all
+  tasks:
+    - name: install/uninstall the software
+      apt:
+        name: "{{b}}"
+        state: "{{a}}"
+        update_cache: "{{c}}"
+...

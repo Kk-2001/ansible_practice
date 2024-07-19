@@ -1,0 +1,20 @@
+---
+- name: create file and directory on all the servers
+  hosts: all
+  tasks:
+    - name: create a directory on /tmp folder
+      file:
+        name: /tmp/dir1
+        state: directory
+    - name: create a file in /tmp/dir1
+      file:
+        name: /tmp/dir1/file1
+        state: touch
+        owner: root
+        group: ravi
+        mode: 760
+    - name: copy passwd file into dir1
+      copy:
+        src: /etc/passwd
+        dest: /tmp/dir1
+...

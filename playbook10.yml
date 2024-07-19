@@ -1,0 +1,15 @@
+---
+- name: loops in ansile
+  hosts: all
+  tasks:
+    - name: install & uninstall mutiple softwares
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - tree
+        - git
+        - maven
+
+...
