@@ -9,12 +9,15 @@
         update_cache: yes
     - name: edit the index.html file
       copy:
-        src: "welcome to intelliq it"
+        content: "welcome to intelliq it"
         dest: /var/www/html/index.html
     - name: restart the apache2
       service:
         name: apache2
         state: restarted
+    - name: pause for 1 minute
+      pause:
+        minutes: 1
     - name: check apache2 response on server1
       uri:
         url: http://172.31.7.112
