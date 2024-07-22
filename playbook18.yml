@@ -1,0 +1,31 @@
+---
+- name: setup of tomcat using handlers
+  hosts: all
+  tasks:
+    - name: install tomcat10
+      apt:
+        name: tomcat10
+        state: present
+        update_cache: yes
+      notify: check url response
+    - name: edit the tomcat-users.xml file
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/tomcat-users.xml
+      notify: restart tomcat10
+  handlers:
+    - name: restart tomcat10
+      service:
+        name: tomcat10
+        state: restarted
+    - name: check url response
+      uri:
+        url: "{{item}}"
+        status_code: 200
+      with_items:
+        - http://172.31.7.112
+        - http://172.31.2.196
+
+
+...

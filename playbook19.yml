@@ -1,0 +1,29 @@
+---
+- name: setup nginx software on all servers
+  hosts: all
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+      notify: check url response
+    - name: edit the index.html file
+      replace:
+        regexp: Original index.html
+        replace: inde.html
+        path: /etc/nginx
+      notify: restart nginx
+  handlers:
+   - name: restart nginx
+     service:
+      state: restarted
+   - name: check url response
+     uri:
+      url: "{{item}}"
+      status_code: 200
+     with_items:
+      - http://172.31.7.112
+      - http://172.31.2.196
+
+...
