@@ -10,14 +10,15 @@
       notify: check url response
     - name: edit the index.html file
       replace:
-        regexp: Original index.html
+        regexp: index.html
         replace: inde.html
-        path: /etc/nginx
+        path: /usr/share/nginx/html/index.html
       notify: restart nginx
   handlers:
    - name: restart nginx
      service:
-      state: restarted
+       name: nginx
+       state: restarted
    - name: check url response
      uri:
       url: "{{item}}"

@@ -1,0 +1,39 @@
+---
+- name: install jenkins and requried softwares
+  hosts: jenkinsservers
+  tasks:
+    - name: install requried softwares
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - {a: openjdk-11-jdk,b: present,c: yes}
+        - {a: git,b: present,c: no}
+        - {a: maven,b: present,c: no}
+    - name: download jenkins.war
+      get_url:
+        url: https://get.jenkins.io/war-stable/2.452.3/jenkins.war
+        dest: /home/ubuntu
+- name: install tomcat and dependent softwares
+  hosts: servers
+  tasks:
+    - name: install tomcat10 and tomcat10-admin
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - {a: tomcat10,b: present,c: yes}
+        - {a: tomcat10-admin,b: present,c: no}
+    - name: copy tomcat-users.xml file
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat
+      notify: restart tomcat
+  handlers:
+    - name: restart tomcat
+      service:
+        name: tomcat10
+        service: restarted
+...

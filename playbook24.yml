@@ -1,0 +1,24 @@
+---
+- name: implementin tags
+  hosts: all
+  tasks:
+    - name: install tree
+      apt:
+        name: tree
+        state: present
+        update_cache: yes
+      tags: trees installation
+    - name: user creation 
+      user:
+        name: balu
+        password: kali
+        home: /tmp/balu
+      tags:
+        - user creation
+        - never
+    - name: copy passwd file
+      copy:
+        src: /etc/passwd
+        dest: /tmp
+
+...
