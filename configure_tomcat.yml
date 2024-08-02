@@ -1,0 +1,14 @@
+---
+- name: configure tomcat10 on all the servers
+  hosts: all
+  tasks:
+    - name: call multiple child playbooks
+      include_tasks: "{{item}}"
+      with_items:
+        - install_tomcat.yml
+        - tomcat-users_copy.yml
+        - edit_port_tomcat.yml
+        - restart_tomcat.yml
+        - pause_tomcat.yml
+        - check_tomcat_response.yml
+...

@@ -1,0 +1,9 @@
+---
+- name: check uri response on all servers using rolls
+  uri:
+    url: "{{item}}"
+    status_code: 200
+  with_items:
+    - http://172.31.7.112
+    - http://172.31.26.34
+...

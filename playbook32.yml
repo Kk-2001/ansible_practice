@@ -1,0 +1,10 @@
+---
+- name: clone git
+  hosts: all
+  tasks:
+    - name: clone git
+      git:
+        repo: https://github.com/Kk-2001/maven_practice.git
+        dest: /tmp/my_git
+
+...
